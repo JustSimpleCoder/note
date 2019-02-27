@@ -1,0 +1,50 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "search_type": "query_then_fetch",
+        "indices": [
+          "yaobin-test*"
+        ],
+        "types": [],
+        "body": {
+          "size": 0,
+          "query": {
+            "match_all": {}
+          }
+        }
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 100000
+      }
+    }
+  },
+  "actions": {
+    "my_webhook": {
+      "webhook": {
+        "scheme": "https",
+        "host": "oapi.dingtalk.com",
+        "port": 443,
+        "method": "post",
+        "path": "/robot/send",
+        "params": {
+          "access_token": "792f4e9250ed0bcaf8fce150f532e5eb492a1309fdcd872691305746ca8ccf8b",
+          "msgtype": "text"
+        },
+        "headers": {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        "body": "{\"msgtype\":\"text\" ,\"text\":{\"content\":123}}"
+      }
+    }
+  }
+}
