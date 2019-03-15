@@ -32,7 +32,7 @@
 	// 生产消息
 	$rk = new RdKafka\Producer();
 	$rk->setLogLevel(LOG_DEBUG);
-	$rk->addBrokers("10.15.4.237:19092,10.15.4.238:19092,10.15.4.239:19092");
+	$rk->addBrokers("1.1.1.1:19092,1.1.1.1:19092,1.1.1.1:19092");
 	$topic = $rk->newTopic("test");
 	for ($i = 0; $i < 2; $i++) {
     	$topic->produce(RD_KAFKA_PARTITION_UA, 0, "Message $i");
@@ -44,9 +44,8 @@
 	// 消费	
 	$rk = new RdKafka\Consumer();
 	$rk->setLogLevel(LOG_DEBUG);
-	$rk->addBrokers("10.15.4.237:19092,10.15.4.238:19092,10.15.4.239:19092");
-	
-	
+
+	$rk->addBrokers("1.1.1.1:19092,1.1.1.1:19092,1.1.1.1:19092");
 	
 	$topicConf = new RdKafka\TopicConf();
 	$topicConf->set('auto.commit.enable', 0);
