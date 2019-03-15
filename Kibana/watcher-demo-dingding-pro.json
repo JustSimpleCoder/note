@@ -1,0 +1,78 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "search_type": "query_then_fetch",
+        "indices": [
+          "p1-wxbackend*"
+        ],
+        "types": [],
+        "body": {
+          "size": 10,
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "match_all": {}
+                },
+                {
+                  "bool": {
+                    "minimum_should_match": 1,
+                    "should": [
+                      {
+                        "match_phrase": {
+                          "level": "500"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "filter": {
+                "range": {
+                  "@timestamp": {
+                    "from": "{{ctx.trigger.scheduled_time}}||-1m",
+                    "to": "{{ctx.trigger.triggered_time}}"
+                  }
+                }
+              },
+              "should": [],
+              "must_not": []
+            }
+          }
+        }
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
+      }
+    }
+  },
+  "actions": {
+    "dingding_webhook": {
+      "webhook": {
+        "scheme": "https",
+        "host": "oapi.dingtalk.com",
+        "port": 443,
+        "method": "post",
+        "path": "/robot/send",
+        "params": {
+          "access_token": "54383e29352655f2c264882a2073da8e8df7d0c26e18cb04aff4f2cffc7d91f9",
+          "msgtype": "text"
+        },
+        "headers": {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        "body": "{\"msgtype\":\"text\" ,\"text\":{\"content\":\"Level: {{ctx.payload.hits.hits.0._source.level}}  Count：{{ctx.payload.hits.total}}  Channel: {{ctx.payload.hits.hits.0._source.channel}}  Msg: {{ctx.payload.hits.hits.0._source.message}} Time:{{ctx.payload.hits.hits.0._source.datetime.date}}  \"}}"
+      }
+    }
+  }
+}
