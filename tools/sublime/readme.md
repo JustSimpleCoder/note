@@ -1,6 +1,15 @@
 
-Sublime 常用配置
--
+### Sublime 常用配置 ###
+
+
+- 基础配置 Settings-User
+
+```
+"tab_size": 4,
+"translate_tabs_to_spaces": true,
+
+```
+
 - php cs [安装配置说明](./phpcs.md)
 - php fmt
 

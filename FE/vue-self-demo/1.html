@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1 demo</title>
+</head>
+<body>
+
+    <div id="app"> 
+
+        <!-- <p> {{dogs }} </p> -->
+
+        <p> sum : {{numberSum}} </p>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+
+    <script>
+        
+        new Vue({
+
+            el:'#app',
+            data:{
+                // dogs:['a','b','c'],
+                numbers:[1,2]
+            },
+            created(){
+                
+                
+            },
+            computed:{
+                numberSum:{
+                    get() {
+                        return numbers.reduce((sum,val)=>sum+val);
+                    },
+                    set(newValue){
+                        const oldVal  = this.numberSum;
+                        const diff = newValue-oldVal;
+                        this.numbers.push(diff);
+                    }
+                }
+
+            }
+
+
+        });
+
+       
+
+    </script>
+
+</body>
+</html>
