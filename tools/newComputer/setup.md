@@ -46,5 +46,6 @@ export HOMEBREW_NO_AUTO_UPDATE=true
 ```
 
 -javaagent:/Users/yaobin/Project/software/jetbrains-agent.jar
+http://fls.jetbrains-agent.com
 
 ```

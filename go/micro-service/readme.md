@@ -9,6 +9,7 @@
 
 ### 网络协议 & 连接 ###
 
+- protobuf 数据格式
 - gRPC  基于 http2
 - RESET 
 - RMI ~ (Dubbo) ?
@@ -31,3 +32,4 @@
 - 使用的协议
     - paxos
     - raft
+
